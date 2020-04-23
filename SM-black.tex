@@ -1,0 +1,78 @@
+%Standard Model Graphic from particle fever by Kyle Cranmer, Earth Day, 2020
+%adapted from http://www.texample.net/tikz/examples/dartboard/ 
+\documentclass[16 pt, dvipsnames]{minimal}
+
+\usepackage{tikz}
+\usepackage[pdftex,active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+
+\usetikzlibrary{decorations, decorations.text,backgrounds}
+
+\tikzstyle{wired}=[draw=white!30, line width=0.35mm]
+\tikzstyle{number}=[anchor=center, color=white]
+
+\newcommand{\fermion}[4]{
+    \filldraw[#1, wired]
+      ({30 *  #2}      :                   #3) arc
+      ({30 *  #2}      : {30 * (#2 + 1)} : #3) --
+      ({30 * (#2 + 1)} :                   #4) arc
+      ({30 * (#2 + 1)} : {30 *  #2}      : #4) -- cycle;
+}
+
+\newcommand{\boson}[4]{
+    \filldraw[#1, wired]
+      ({90 *  #2}      :                   #3) arc
+      ({90 *  #2}      : {90 * (#2 + 1)} : #3) --
+      ({90 * (#2 + 1)} :                   #4) arc
+      ({90 * (#2 + 1)} : {90 *  #2}      : #4) -- cycle;
+}
+
+\begin{document}
+
+
+%black background
+\begin{tikzpicture}[scale=.14, background rectangle/.style={fill=black}, show background rectangle]
+
+% Higgs
+\fill[black] (0, 0) circle (50mm);
+\node[number] at (0,0) {$H$};
+
+  % Bosons
+  \foreach\i in {0,1,...,4} {
+    \boson{blue}{\i}{50mm}{100mm} Bosons
+  }
+
+  % Quarks
+  \foreach\i in {-3,-2,...,5} {
+    \fermion{Red}{\i}{150mm}{100mm} Fermions
+  }
+
+  % Leptons
+  \foreach\i in {6,7,...,11} {
+    \fermion{green}{\i}{150mm}{100mm} Fermions
+  }
+
+  % Labels.
+  \foreach \sector/\label in {%
+      0/$e$, 1/$\mu$, 2/$\tau$,
+      3/$u$, 4/$c$, 5/$t$,
+      6/$d$, 7/$s$, 8/$b$,
+      9/$\nu_e$, 10/$\nu_\mu$, 11/$\nu_\tau$
+      }%
+  {
+    \node[number] at ({30 * (-\sector + 8.5)} : 125mm) {\label};
+  }
+
+  % Labels.
+  \foreach \sector/\label in {%
+      0/$\gamma$, 1/$g$, 2/$Z$, 3/$W$
+      }%
+  {
+    \node[number] at ({90 * (-\sector+1.5 )} : 75mm) {\label};
+  }
+
+\end{tikzpicture}
+
+
+
+\end{document}
